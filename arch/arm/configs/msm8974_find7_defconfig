@@ -3633,3 +3633,13 @@ CONFIG_NLATTR=y
 # CONFIG_CORDIC is not set
 CONFIG_QMI_ENCDEC=y
 # CONFIG_QMI_ENCDEC_DEBUG is not set
+<<<<<<< HEAD:arch/arm/configs/msm8974_find7_defconfig
+=======
+
+#myK#
+CONFIG_ASMP=y
+CONFIG_FB_MSM_MDSS_KCAL_CTRL=y
+CONFIG_CPU_FREQ_GOV_BARRY_ALLEN=y
+CONFIG_IOSCHED_TRIPNDROID=y
+# CONFIG_DEFAULT_TRIPNDROID is not set
+>>>>>>> 0f48fa9... block: Add Tripndroid scheduler:arch/arm/configs/cyanogenmod_bacon_defconfig
