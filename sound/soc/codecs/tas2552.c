@@ -262,6 +262,14 @@ static int tas2552_set_current(void)
         retval = tas2552_reg_write(tas2552, TAS2552_PGA_GAIN_REG, cur, 0xff);
         pr_debug("gain af reg:0x12 value:0x%02x\n", cur);
     }
+    else
+    {
+        tas2552_reg_read(tas2552, TAS2552_PGA_GAIN_REG, &cur);
+        pr_debug("recover gain bf reg:0x12 value:0x%02x\n", cur);
+        cur = 0x15;                    //0x15 --- 14dB
+        retval = tas2552_reg_write(tas2552, TAS2552_PGA_GAIN_REG, cur, 0xff);
+        pr_debug("recover gain af reg:0x12 value:0x%02x\n", cur);
+    }
 	for (i = 0; i < ARRAY_SIZE(tas2552_reg_current); i++) 
 	{
 	    if (tas2552_reg_current[i][0] == 0x32)//set current reg

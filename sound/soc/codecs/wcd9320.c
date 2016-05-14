@@ -1601,6 +1601,24 @@ static int spkr_get_control(struct snd_kcontrol *kcontrol,
 {
 	return 0;
 }
+
+extern void tas2552_current_set(u8 cur);
+static int tas2552_current_get(struct snd_kcontrol *kcontrol,
+				struct snd_ctl_elem_value *ucontrol)
+{
+    return 0;
+}
+static int tas2552_current_put(struct snd_kcontrol *kcontrol,
+				struct snd_ctl_elem_value *ucontrol)
+{
+    u8 tas2552_current;
+
+	pr_debug("%s: ucontrol->value.integer.value[0]  = %ld\n", __func__,
+			ucontrol->value.integer.value[0]);
+	tas2552_current = ucontrol->value.integer.value[0];
+    tas2552_current_set(tas2552_current);
+    return 0;
+}
 #endif
 
 static const char * const taiko_1_x_ear_pa_gain_text[] = {
@@ -1651,11 +1669,23 @@ static const struct soc_enum taiko_2_x_ear_pa_gain_enum =
 	SOC_ENUM_SINGLE_EXT(ARRAY_SIZE(taiko_2_x_ear_pa_gain_text),
 			taiko_2_x_ear_pa_gain_text);
 
+#ifdef CONFIG_OPPO_DEVICE_N3
+static const char * const tas2552_current_text[] = {
+	"CUR_1P5A", "CUR_2P0A", "CUR_2P5A", "CUR_3P0A"
+};
+
+static const struct soc_enum tas2552_current_enum =
+	SOC_ENUM_SINGLE_EXT(ARRAY_SIZE(tas2552_current_text),
+			tas2552_current_text);
+#endif
+
 static const struct snd_kcontrol_new taiko_2_x_analog_gain_controls[] = {
 
 #ifdef CONFIG_OPPO_DEVICE_N3
 	SOC_SINGLE_EXT("SPKR Enable", 0, 0, 1, 0,
 		                 spkr_get_control, spkr_put_control),
+    SOC_ENUM_EXT("TAS2552 Current", tas2552_current_enum,
+		tas2552_current_get, tas2552_current_put),
 #endif
 	SOC_ENUM_EXT("EAR PA Gain", taiko_2_x_ear_pa_gain_enum,
 		taiko_pa_gain_get, taiko_pa_gain_put),
